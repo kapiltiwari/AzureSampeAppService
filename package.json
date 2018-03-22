@@ -4,15 +4,17 @@
   "description": "This is a sample application to be uploaded into azure app service",
   "main": "index.js",
   "scripts": {
+    "start" : "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "kapil tiwari",
   "license": "ISC",
   "dependencies": {
-    "express": "*",
     "body-parser": "*",
     "cookie-parser": "*",
-    "multer": "*"
+    "express": "*",
+    "multer": "*",
+    "socket.io": "^2.0.4"
   },
   "devDependencies": {}
 }
