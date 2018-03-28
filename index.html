@@ -66,14 +66,37 @@
         $(function () {
             var socket = io();
 
-            $('form').submit(function(){
-                socket.emit('chat message', $('#m').val());
+            function parseHttpHeaders(httpHeaders) {
+                return httpHeaders.split("\n")
+                    .map(x => x.split(/: */, 2))
+                    .filter(x => x[0])
+                    .reduce((ac, x) => { ac[x[0]] = x[1]; return ac; }, {});
+            }
+
+            // following is test code to check headers
+            var req = new XMLHttpRequest();
+            req.open('GET', document.location, false);
+            req.send(null);
+            var headers = parseHttpHeaders(req.getAllResponseHeaders().toLowerCase());
+
+            var username = headers["x-ms-client-principal-name"];
+
+            $('form').submit(function () {
+                var newmsg = username + ": " + $('#m').val();
+                socket.emit('chat message', newmsg);
                 $('#m').val('');
                 return false;
             });
 
-            socket.on('chat message', function(msg){
+            socket.on('chat message', function (msg) {
                 $('#messages').append($('<li>').text(msg));
+                window.scrollTo(0, document.body.scrollHeight);
+            });
+
+            socket.on('adduser', function (user) {
+                username = user; // setting user name from server
+                var welcomeuser = "Welcome " + username;
+                $('#messages').append($('<li>').text(welcomeuser));
             });
         });
 

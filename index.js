@@ -1,4 +1,5 @@
 var express = require("express");
+
 var app = express();
 
 var http = require("http").Server(app);
@@ -7,7 +8,20 @@ var io = require('socket.io')(http);
 
 app.get ('/', function (req, res){
     //res.send ("Hello World");
-    res.sendFile(__dirname + '/index.html');
+    var username = req.headers['X-MS-CLIENT-PRINCIPAL-NAME'];
+
+    if (username == undefined)
+        username = "testuser";
+    var options = {
+        headers: {
+            'X-MS-CLIENT-PRINCIPAL-NAME': username,
+            'x-sent': true
+        }
+      };    
+    
+    res.sendFile(__dirname + '/index.html', options);
+    io.emit('adduser', username);
+    //res.render('index2', {'username': req.headers['X-MS-CLIENT-PRINCIPAL-NAME']});
 });
 
 

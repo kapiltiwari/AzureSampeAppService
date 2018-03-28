@@ -4,7 +4,7 @@
   "description": "This is a sample application to be uploaded into azure app service",
   "main": "index.js",
   "scripts": {
-    "start" : "node index.js",
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "kapil tiwari",
@@ -13,8 +13,13 @@
     "body-parser": "*",
     "cookie-parser": "*",
     "express": "*",
+    "express-static": "^1.2.5",
+    "jade": "^1.0.4",
+    "morgan": "*",
     "multer": "*",
-    "socket.io": "^2.0.4"
+    "nib": "^1.0.4",
+    "socket.io": "^2.0.4",
+    "stylus": "^0.49.1"
   },
   "devDependencies": {}
 }
